@@ -15,7 +15,7 @@ const HeaderGIF = async (
   latitude: number,
   longitude: number
 ): Promise<Weather | null> => {
-  const apiKey = "7eb67dc3f96938e2fed905261c066e79"; // Replace with your OpenWeatherMap API key
+  const apiKey = "your_api_key"; // Replace with your OpenWeatherMap API key
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=hourly,daily&appid=${apiKey}`;
 
   try {
