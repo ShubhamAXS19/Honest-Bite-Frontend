@@ -9,8 +9,8 @@ const BannerContainer = styled.div`
 
 const ImageContainer = styled.div`
   width: calc(50% - 1vw);
+  height: calc((50% - 1vw) * 9 / 16);
   position: relative;
-  overflow: hidden;
   aspect-ratio: 16 / 9;
 `;
 
@@ -51,7 +51,7 @@ const Banner: React.FC<{
       setTimeout(() => {
         setIndex((prevIndex) => (prevIndex + 1) % imagesLength);
         setTransitioning(false);
-      }, 1000); // This should match the transition duration in styled-components
+      }, 1000);
     };
 
     const leftTimer = setInterval(() => {
@@ -72,20 +72,12 @@ const Banner: React.FC<{
     <BannerContainer>
       <ImageContainer>
         <ImageWrapper $transitioning={leftTransitioning}>
-          <StyledImage src={leftImages[leftIndex]} alt="" />
-          <StyledImage
-            src={leftImages[(leftIndex + 1) % leftImages.length]}
-            alt=""
-          />
+          <StyledImage src={leftImages[leftIndex]} alt="Left banner" />
         </ImageWrapper>
       </ImageContainer>
       <ImageContainer>
         <ImageWrapper $transitioning={rightTransitioning}>
-          <StyledImage src={rightImages[rightIndex]} alt="" />
-          <StyledImage
-            src={rightImages[(rightIndex + 1) % rightImages.length]}
-            alt=""
-          />
+          <StyledImage src={rightImages[rightIndex]} alt="Right banner" />
         </ImageWrapper>
       </ImageContainer>
     </BannerContainer>

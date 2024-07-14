@@ -108,6 +108,7 @@ import PizzaIcon from "../../assets/pizza.png";
 import { PiMapPinLight, PiMapPinFill } from "react-icons/pi";
 import { LuPlusCircle } from "react-icons/lu";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const BottomMenu = () => {
   const [homeFilled, setHomeFilled] = useState(false);
@@ -140,7 +141,7 @@ const BottomMenu = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 flex items-center justify-between pl-6 pr-6 pt-2 pb-2">
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-10 flex items-center justify-between px-6 py-2">
       <button onClick={toggleHome}>
         {homeFilled ? (
           <div className="flex flex-col items-center justify-center">
@@ -161,34 +162,41 @@ const BottomMenu = () => {
             <p>Create a post</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center">
-            <LuPlusCircle size={35} />
-            <p>Create a post</p>
-          </div>
+          <Link to="/create-post">
+            <div className="flex flex-col items-center justify-center">
+              <LuPlusCircle size={35} />
+              <p>Create a post</p>
+            </div>
+          </Link>
         )}
       </button>
-      <button onClick={movePizzaIcon}>
-        <div className="flex flex-col items-center justify-center">
-          <img
-            id="pizzaIcon"
-            src={PizzaIcon}
-            className="w-12 h-12 transition-transform duration-300 transform hover:scale-110"
-            alt="Pizza Icon"
-          />
-          <p>Share a slice</p>
-        </div>
-      </button>
+      <Link to="/share-a-slice">
+        <button onClick={movePizzaIcon}>
+          <div className="flex flex-col items-center justify-center">
+            <img
+              id="pizzaIcon"
+              src={PizzaIcon}
+              className="w-12 h-12 transition-transform duration-300 transform hover:scale-110"
+              alt="Pizza Icon"
+            />
+            <p>Share a slice</p>
+          </div>
+        </button>
+      </Link>
       <button onClick={toggleMapPin}>
         {mapPinFilled ? (
           <div className="flex flex-col items-center justify-center">
             <PiMapPinFill size={35} />
-            <p>Share a slice</p>
+
+            <p>Find Nearby Spot</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center">
-            <PiMapPinLight size={35} />
-            <p>Share a slice</p>
-          </div>
+          <Link to="/nearby-spot">
+            <div className="flex flex-col items-center justify-center">
+              <PiMapPinLight size={35} />
+              <p>Find Nearby Spot</p>
+            </div>
+          </Link>
         )}
       </button>
       <button onClick={toggleBookmark}>
@@ -198,10 +206,12 @@ const BottomMenu = () => {
             <p>Bookmark</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center">
-            <IoBookmarkOutline size={35} />
-            <p>Bookmark</p>
-          </div>
+          <Link to="/bookmark">
+            <div className="flex flex-col items-center justify-center">
+              <IoBookmarkOutline size={35} />
+              <p>Bookmark</p>
+            </div>
+          </Link>
         )}
       </button>
     </div>

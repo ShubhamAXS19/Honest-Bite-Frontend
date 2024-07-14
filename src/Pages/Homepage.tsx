@@ -1,33 +1,24 @@
-import BottomMenu from "../Components/BottomMenu";
-import Header from "../Components/Header";
 import Searchbar from "../Components/Searchbar";
 import { IoHeartOutline } from "react-icons/io5";
 import Banner from "../Components/Banner";
 import SpotCard from "../Components/SpotCard";
 import FoodCard from "../Components/FoodCard";
+import { AiOutlineThunderbolt } from "react-icons/ai";
+import DetailCard from "../Components/DetailCard";
 
 const Homepage = () => {
-  const leftImages = [
-    "../../assets/taco.jpg",
-    "../../assets/sushi.jpg",
-    "/path/to/left-image3.jpg",
-  ];
+  const leftImages = ["../../assets/tsco.jpg", "../../assets/sandwich.jpg"];
 
-  const rightImages = [
-    "../../assets/pav-bhaji.jpg",
-    "../../assets/dosa.jpg",
-    "../../assets/vada-pav.png",
-  ];
+  const rightImages = ["../../assets/pav-bhaji.jpg", "../../assets/burger.jpg"];
   return (
     <>
-      <Header />
       <Searchbar />
       {/* banner */}
 
       {/* <Banner
         leftImages={leftImages}
         rightImages={rightImages}
-        interval={5000}
+        interval={3000}
       /> */}
 
       <div className="flex items-center justify-center my-6">
@@ -70,12 +61,27 @@ const Homepage = () => {
       </div>
 
       <div className="overflow-x-auto mx-4 my-2 py-2">
-        <div className="grid grid-rows-2 grid-flow-col gap-4 w-max">
+        <div className="grid grid-flow-col gap-4 w-max">
           <FoodCard />
         </div>
       </div>
 
-      <BottomMenu />
+      <div className="flex items-center justify-center my-6">
+        <div className="flex-grow border-t-2 mx-4"></div>
+        <div className="flex justify-center">
+          <div className="inline-flex items-center justify-center py-2 px-4 rounded-lg shadow-md border border-gray-300">
+            <button className="flex-2 text-center ">All</button>
+            <div className="border-l-2 h-6 mx-2"></div>
+            <button className="flex items-center flex-2 justify-center">
+              <AiOutlineThunderbolt size={20} />
+              <p className="pl-2">NEAR & FAST</p>
+            </button>
+          </div>
+        </div>
+        <div className="flex-grow border-t-2 mx-4"></div>
+      </div>
+      <DetailCard />
+      <div className="mb-40"></div>
     </>
   );
 };
