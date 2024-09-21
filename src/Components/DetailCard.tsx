@@ -72,7 +72,7 @@ const DetailCard: React.FC = () => {
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
-        autoplay={{ delay: 1000 }} // Add autoplay configuration here
+        autoplay={{ delay: 1500 }} // Add autoplay configuration here
         modules={[Navigation, Pagination, Autoplay]} // Add Autoplay module here
       >
         <SwiperSlide>

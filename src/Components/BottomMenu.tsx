@@ -108,9 +108,10 @@ import PizzaIcon from "../../assets/pizza.png";
 import { PiMapPinLight, PiMapPinFill } from "react-icons/pi";
 import { LuPlusCircle } from "react-icons/lu";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const BottomMenu = () => {
+  const navigate = useNavigate();
   const [homeFilled, setHomeFilled] = useState(false);
   const [bookmarkFilled, setBookmarkFilled] = useState(false);
   const [mapPinFilled, setMapPinFilled] = useState(false);
@@ -118,6 +119,7 @@ const BottomMenu = () => {
 
   const toggleHome = () => {
     setHomeFilled(!homeFilled);
+    navigate("/");
   };
 
   const toggleBookmark = () => {

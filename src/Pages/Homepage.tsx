@@ -5,7 +5,7 @@ import SpotCard from "../Components/SpotCard";
 import FoodCard from "../Components/FoodCard";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import DetailCard from "../Components/DetailCard";
-
+import { Link } from "react-router-dom";
 const Homepage = () => {
   const leftImages = ["../../assets/tsco.jpg", "../../assets/sandwich.jpg"];
 
@@ -80,7 +80,9 @@ const Homepage = () => {
         </div>
         <div className="flex-grow border-t-2 mx-4"></div>
       </div>
-      <DetailCard />
+      <Link to="/detail">
+        <DetailCard />
+      </Link>
       <div className="mb-40"></div>
     </>
   );
