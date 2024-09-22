@@ -3,6 +3,8 @@
   margin: 0;
 }
 
+/* Add this in src/index.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

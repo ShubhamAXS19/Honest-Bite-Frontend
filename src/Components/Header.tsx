@@ -6,6 +6,7 @@ import Snowfall from "../../assets/Snowfall.mp4";
 import Sunny from "../../assets/Sunny Morning.mp4";
 import Rain from "../../assets/Rain.mp4";
 import Cloudy from "../../assets/Cloudy.mp4";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [weather, setWeather] = useState<any | null>(null);
@@ -85,7 +86,9 @@ const Header = () => {
           <p className="mt-1 text-sm font-light text-gray-400">Address</p>
         </div>
       </div>
-      <RiAccountCircleFill className="relative z-10 text-5xl text-gray-500" />
+      <Link to="/user">
+        <RiAccountCircleFill className="relative z-10 text-5xl text-gray-500" />
+      </Link>
     </div>
   );
 };

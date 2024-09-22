@@ -7,6 +7,7 @@ import ShareSlice from "./Pages/ShareSlice";
 import NearbySpot from "./Pages/NearbySpot";
 import Bookmark from "./Pages/Bookmark";
 import Layout from "./Layouts/Layout";
+import User from "./Pages/User";
 // import dotenv from "dotenv";
 // dotenv.config();
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/user" element={<User />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/create-post" element={<CreatePost />} />
