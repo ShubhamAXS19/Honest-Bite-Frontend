@@ -10,21 +10,25 @@ import Layout from "./Layouts/Layout";
 import User from "./Pages/User";
 // import dotenv from "dotenv";
 // dotenv.config();
+
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
+      <Routes>
+        {/* Routes inside Layout */}
+        <Route element={<Layout />}>
           <Route path="/" element={<Homepage />} />
-          <Route path="/user" element={<User />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/share-a-slice" element={<ShareSlice />} />
           <Route path="/nearby-spot" element={<NearbySpot />} />
           <Route path="/bookmark" element={<Bookmark />} />
-        </Routes>
-      </Layout>
+        </Route>
+
+        {/* User route outside Layout */}
+        <Route path="/user" element={<User />} />
+      </Routes>
     </Router>
   );
 }

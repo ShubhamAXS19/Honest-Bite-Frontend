@@ -15,7 +15,7 @@ const HeaderGIF = async (
   latitude: number,
   longitude: number
 ): Promise<Weather | null> => {
-  const apiKey = "your_api_key"; // Replace with your OpenWeatherMap API key
+  const apiKey = import.meta.env.VITE_WEATHER_KEY;
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=hourly,daily&appid=${apiKey}`;
 
   try {

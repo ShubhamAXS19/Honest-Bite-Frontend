@@ -1,11 +1,14 @@
+import { Outlet } from "react-router-dom";
 import Header from "../Components/Header";
 import BottomMenu from "../Components/BottomMenu";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <div>
       <Header />
-      <main>{children}</main>
+      <main>
+        <Outlet />
+      </main>
       <BottomMenu />
     </div>
   );
