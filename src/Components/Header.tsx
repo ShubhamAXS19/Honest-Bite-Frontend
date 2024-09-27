@@ -86,7 +86,7 @@ const Header = () => {
           <p className="mt-1 text-sm font-light text-gray-400">Address</p>
         </div>
       </div>
-      <Link to="/user">
+      <Link to="/userInfo">
         <RiAccountCircleFill className="relative z-10 text-5xl text-gray-500" />
       </Link>
     </div>

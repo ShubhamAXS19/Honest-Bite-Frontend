@@ -6,8 +6,13 @@ import CreatePost from "./Pages/CreatePost";
 import ShareSlice from "./Pages/ShareSlice";
 import NearbySpot from "./Pages/NearbySpot";
 import Bookmark from "./Pages/Bookmark";
-import Layout from "./Layouts/Layout";
-import User from "./Pages/User";
+import Layout from "./Layouts/MainLayout";
+
+import EditProfile from "./Pages/EditProfile";
+import Trending from "./Pages/Trending";
+import Dashboard from "./Pages/Dashboard";
+import SideLayout from "./Layouts/SideLayout";
+import UserInfo from "./Pages/UserInfo";
 // import dotenv from "dotenv";
 // dotenv.config();
 
@@ -23,11 +28,16 @@ function App() {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/share-a-slice" element={<ShareSlice />} />
           <Route path="/nearby-spot" element={<NearbySpot />} />
-          <Route path="/bookmark" element={<Bookmark />} />
+          <Route path="/trending" element={<Trending />} />
         </Route>
 
         {/* User route outside Layout */}
-        <Route path="/user" element={<User />} />
+        <Route element={<SideLayout />}>
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/analytics" element={<Dashboard />} />
+          <Route path="/bookmark" element={<Dashboard />} />
+        </Route>
       </Routes>
     </Router>
   );

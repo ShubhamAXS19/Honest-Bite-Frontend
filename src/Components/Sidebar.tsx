@@ -7,13 +7,17 @@ const Sidebar = () => {
       <Link to="/edit-profile">
         <Button>Edit Profile</Button>
       </Link>
-      <Link to="/Dashboard">
+      <Link to="/analytics">
         <Button>Analytics</Button>
       </Link>
-      <Button>Logout</Button>
+      <Link to="/bookmark">
+        <Button>Bookmark</Button>
+      </Link>
+
       <Link to="/">
         <Button>Back to Home</Button>
       </Link>
+      <Button>Logout</Button>
     </div>
   );
 };

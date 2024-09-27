@@ -1,7 +1,7 @@
+import { Outlet } from "react-router-dom";
 import Sidebar from "../Components/Sidebar";
-import Dashboard from "./Dashboard";
 
-const User = () => {
+const Layout = () => {
   return (
     <>
       <div className="flex h-screen">
@@ -12,11 +12,11 @@ const User = () => {
 
         {/* Dashboard (takes the remaining space) */}
         <div className="flex-1 bg-gray-100">
-          <Dashboard />
+          <Outlet />
         </div>
       </div>
     </>
   );
 };
 
-export default User;
+export default Layout;
