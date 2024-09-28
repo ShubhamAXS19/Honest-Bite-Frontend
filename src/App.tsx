@@ -23,20 +23,21 @@ function App() {
         {/* Routes inside Layout */}
         <Route element={<Layout />}>
           <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Signup />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/share-a-slice" element={<ShareSlice />} />
           <Route path="/nearby-spot" element={<NearbySpot />} />
           <Route path="/trending" element={<Trending />} />
         </Route>
 
+        <Route path="/register" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+
         {/* User route outside Layout */}
         <Route element={<SideLayout />}>
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/analytics" element={<Dashboard />} />
-          <Route path="/bookmark" element={<Dashboard />} />
+          <Route path="/bookmark" element={<Bookmark />} />
         </Route>
       </Routes>
     </Router>
