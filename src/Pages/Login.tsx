@@ -11,12 +11,35 @@ import Button from "@mui/material/Button";
 import biryani from "../../assets/biryani.jpg";
 import burger from "../../assets/burger.jpg";
 import QUESADILLA from "../../assets/QUESADILLA.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast"; // Import toast
 
 const images = [biryani, burger, QUESADILLA];
 
-const Login: React.FC = () => {
+const Login = () => {
   const [isExploding, setIsExploding] = useState(false);
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:3000/v1/auth/sessions", {
+        email: Email,
+        password: Password,
+      });
+      localStorage.setItem("accessToken", res.data.token);
+
+      // Show toast notification after successful login
+      toast.success("One last step remaining!");
+
+      navigate("/edit-profile");
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
 
   // Handle explosion effect on slide change
   const handleSlideChange = () => {
@@ -28,7 +51,7 @@ const Login: React.FC = () => {
     <div className="w-screen h-screen bg-white flex items-center justify-center rounded-md">
       <div className="w-[80vw] h-[80vh] flex">
         {/* Left Side Div */}
-        <div className="w-1/2 h-full bg-blue-500 flex flex-col items-center relative overflow-hidden">
+        <div className="w-1/2 h-full bg-blue-500 flex flex-col items-center relative overflow-hidden rounded-l-lg">
           {/* Maxed Out Confetti Explosion Effect */}
           {isExploding && (
             <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
@@ -83,32 +106,40 @@ const Login: React.FC = () => {
         </div>
 
         {/* Right Side Div */}
-        <div className="w-1/2 h-full bg-gray-100 flex flex-col items-center justify-center">
-          <h1 className="text-4xl mb-16">Sign In</h1>
-          <TextField
-            id="outlined-basic"
-            label="Email"
-            variant="outlined"
-            sx={{ mb: 4, width: "50%" }}
-          />
-          <TextField
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
-            sx={{ mb: 4, width: "50%" }}
-          />
-          <Button
-            variant="contained"
-            sx={{ mb: 4, pt: 2, pb: 2, width: "50%" }}
+        <div className="w-1/2 h-full bg-gray-100 flex flex-col items-center justify-center rounded-r-lg">
+          <form
+            onSubmit={handleOnSubmit}
+            className="w-full flex flex-col items-center"
           >
-            Login
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ mb: 4, pt: 2, pb: 2, width: "50%" }}
-          >
-            Reset Password
-          </Button>
+            <h1 className="text-4xl mb-16">Sign In</h1>
+            <TextField
+              id="outlined-basic"
+              label="Email"
+              variant="outlined"
+              sx={{ mb: 4, width: "50%" }}
+              value={Email} // Add value for controlled input
+              onChange={(e) => setEmail(e.target.value)} // Update email state
+            />
+            <TextField
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              sx={{ mb: 4, width: "50%" }}
+              type="password" // Make password input secure
+              value={Password} // Add value for controlled input
+              onChange={(e) => setPassword(e.target.value)} // Update password state
+            />
+            <Link to="/forgot-password">
+              <p className="text-blue-500 text-sm mb-4">Forgot Password?</p>
+            </Link>
+            <Button
+              type="submit" // Ensure the button submits the form
+              variant="contained"
+              sx={{ mb: 4, pt: 2, pb: 2, width: "50%" }}
+            >
+              Login
+            </Button>
+          </form>
           <p className="text-xl">
             Don't have an account??{" "}
             <Link to="/register">

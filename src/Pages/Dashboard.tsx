@@ -109,23 +109,30 @@ const Dashboard = () => {
       </div>
 
       {/* Count */}
-      <div className="flex items-center justify-evenly mt-16">
-        <div className="bg-white rounded-lg pt-8 pl-4 pr-16 pb-4 w-[12vw] h-[17vh]">
+      <div className="flex flex-col md:flex-row items-center justify-evenly mt-16 flex-wrap">
+        {/* Card for Total Likes */}
+        <div className="bg-white rounded-lg pt-8 pl-4 pr-6 pb-4 w-full md:w-[12vw] h-[17vh] mx-2 mb-4 md:mb-0">
           <FaThumbsUp size={30} />
           <p className="pt-4 pb-2 text-xl">Total Likes</p>
           <p className="text-3xl">350,809</p>
         </div>
-        <div className="bg-white rounded-lg pt-8 pl-4 pr-16 pb-4 w-[12vw] h-[17vh]">
+
+        {/* Card for Total Comments */}
+        <div className="bg-white rounded-lg pt-8 pl-4 pr-6 pb-4 w-full md:w-[12vw] h-[17vh] mx-2 mb-4 md:mb-0">
           <FaCommentDots size={30} />
           <p className="pt-4 pb-2 text-xl">Total Comments</p>
           <p className="text-3xl">198,072</p>
         </div>
-        <div className="bg-white rounded-lg pt-8 pl-4 pr-16 pb-4 w-[12vw] h-[17vh]">
+
+        {/* Card for Total Shares */}
+        <div className="bg-white rounded-lg pt-8 pl-4 pr-6 pb-4 w-full md:w-[12vw] h-[17vh] mx-2 mb-4 md:mb-0">
           <IoIosMegaphone size={30} />
           <p className="pt-4 pb-2 text-xl">Total Shares</p>
           <p className="text-3xl">120,043</p>
         </div>
-        <div className="bg-white rounded-lg pt-8 pl-4 pr-16 pb-4 w-[12vw] h-[17vh]">
+
+        {/* Card for Engagement */}
+        <div className="bg-white rounded-lg pt-8 pl-4 pr-6 pb-4 w-full md:w-[12vw] h-[17vh] mx-2 mb-4 md:mb-0">
           <PiEyesFill size={30} />
           <p className="pt-4 pb-2 text-xl">Engagement</p>
           <p className="text-3xl">74.51%</p>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { Button } from "@mui/material";
 
 const ShareSlice = () => {
   const [location, setLocation] = useState<{
@@ -335,7 +336,11 @@ const ShareSlice = () => {
           </div>
         </div>
       </div>
-
+      <div className=" flex items-center justify-center">
+        <Button variant="contained" sx={{ mt: 4, p: 2 }}>
+          Find Slice
+        </Button>
+      </div>
       <div className="mb-40"></div>
     </>
   );

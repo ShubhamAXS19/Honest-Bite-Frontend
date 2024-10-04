@@ -2,7 +2,7 @@ import UserPostCard from "../Components/UserPostcard";
 
 const EditProfile = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center w-full  mx-4 my-8">
       <div>
         <img src="" alt="User Avatar" />
       </div>
@@ -26,7 +26,7 @@ const EditProfile = () => {
           <input type="text" />
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col my-4">
         <label htmlFor="">Bio</label>
         <input type="text" />
       </div>
@@ -38,11 +38,11 @@ const EditProfile = () => {
       </div>
 
       {/* Horizontal Scrolling Container */}
-      <div className="overflow-x-auto mx-4 my-2 py-2 w-full">
+      <div className="overflow-x-auto mx-4 my-2 py-2 w-full ">
         <div className="grid grid-flow-col gap-4 w-max">
-          <UserPostCard />
-          <UserPostCard />
-          <UserPostCard />
+          <UserPostCard showEditButton={true} />
+          <UserPostCard showEditButton={true} />
+          <UserPostCard showEditButton={true} />
         </div>
       </div>
 
@@ -53,11 +53,11 @@ const EditProfile = () => {
       </div>
 
       {/* Another Horizontal Scrolling Container */}
-      <div className="overflow-x-auto mx-4 my-2 py-2 w-full">
+      <div className="overflow-x-auto mx-4 my-2 py-2 w-full h-full">
         <div className="grid grid-flow-col gap-4 w-max">
-          <UserPostCard />
-          <UserPostCard />
-          <UserPostCard />
+          <UserPostCard showEditButton={true} />
+          <UserPostCard showEditButton={true} />
+          <UserPostCard showEditButton={true} />
         </div>
       </div>
     </div>

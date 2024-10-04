@@ -10,23 +10,23 @@ const Homepage = () => {
   const leftImages = ["../../assets/tsco.jpg", "../../assets/sandwich.jpg"];
 
   const rightImages = ["../../assets/pav-bhaji.jpg", "../../assets/burger.jpg"];
+
   return (
     <>
       <Searchbar />
+      {/* <div style={{ backgroundColor: "#8ecae6" }}> */}
       {/* banner */}
-
-      {/* <Banner
+      <Banner
         leftImages={leftImages}
         rightImages={rightImages}
         interval={3000}
-      /> */}
+      />
 
       <div className="flex items-center justify-center my-6">
         <div className="flex-grow border-t-2 mx-4"></div>
         <p>For You</p>
         <div className="flex-grow border-t-2 mx-4"></div>
       </div>
-
       {/* menu */}
       <div className="flex justify-center">
         <div className="inline-flex items-center justify-center pt-1 pb-1 px-4 rounded-lg shadow-md border border-gray-300">
@@ -38,34 +38,28 @@ const Homepage = () => {
           </button>
         </div>
       </div>
-
       {/* card */}
-
       <div className="overflow-x-auto mx-4 my-2 py-2">
         <div className="grid grid-flow-col gap-4 w-max">
           <SpotCard />
         </div>
       </div>
-
       {/* Explore */}
       <div className="flex items-center justify-center my-6">
         <div className="flex-grow border-t-2 mx-4"></div>
         <p>Explore</p>
         <div className="flex-grow border-t-2 mx-4"></div>
       </div>
-
       <div className="flex items-center justify-center my-6">
         <div className="flex-grow border-t-2 mx-4"></div>
         <p>WHAT'S ON YOUR MIND ?</p>
         <div className="flex-grow border-t-2 mx-4"></div>
       </div>
-
       <div className="overflow-x-auto mx-4 my-2 py-2">
         <div className="grid grid-flow-col gap-4 w-max">
           <FoodCard />
         </div>
       </div>
-
       <div className="flex items-center justify-center my-6">
         <div className="flex-grow border-t-2 mx-4"></div>
         <div className="flex justify-center">
@@ -83,6 +77,7 @@ const Homepage = () => {
       <Link to="/detail">
         <DetailCard />
       </Link>
+      {/* </div> */}
       <div className="mb-40"></div>
     </>
   );

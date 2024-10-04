@@ -7,10 +7,11 @@ import Sunny from "../../assets/Sunny Morning.mp4";
 import Rain from "../../assets/Rain.mp4";
 import Cloudy from "../../assets/Cloudy.mp4";
 import { Link } from "react-router-dom";
-
+import { Button } from "@mui/material";
 const Header = () => {
   const [weather, setWeather] = useState<any | null>(null);
   const [gif, setGif] = useState<string>("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   useEffect(() => {
     // Function to get user's current location
@@ -32,7 +33,7 @@ const Header = () => {
     const selectGif = (weatherData: any) => {
       if (weatherData) {
         // const weatherCondition = weatherData.weather[0].main.toLowerCase();
-        const weatherCondition = "snow";
+        const weatherCondition = "rain";
         switch (weatherCondition) {
           case "clear":
             setGif(Sunny);
@@ -65,7 +66,7 @@ const Header = () => {
             className="absolute inset-0 w-full h-full object-cover z-0"
             src={gif}
             style={{
-              width: "150px", // Adjust the width as needed
+              width: "110px", // Adjust the width as needed
               height: "110px", // Adjust the height as needed
               top: "50%",
               left: `${15 + 5 * index}%`, // Start 30% from the left and adjust the left position for each video
@@ -76,19 +77,41 @@ const Header = () => {
           />
         ))}
 
-      <div className="relative z-10 flex items-center">
-        <FaMapPin size={55} className="mr-4" />
+      <div className="flex items-center justify-between w-full">
+        {/* Left section (Home with Address) */}
+        <div className="relative z-10 flex items-center">
+          <FaMapPin size={55} className="mr-4" />
+          <div>
+            <Link to="/" className="flex items-center space-x-2">
+              <h1 className="font-semibold text-xl">Home</h1>
+              <RiArrowDropDownLine size={40} className="text-gray-500" />
+            </Link>
+            <p className="mt-1 text-sm font-light text-gray-400">Address</p>
+          </div>
+        </div>
+
+        {/* Right section (Login/Signup or User Icon) */}
         <div>
-          <button className="flex items-center space-x-2">
-            <h1 className="font-semibold text-xl">Home</h1>
-            <RiArrowDropDownLine size={40} className="text-gray-500" />
-          </button>
-          <p className="mt-1 text-sm font-light text-gray-400">Address</p>
+          {isLoggedIn ? (
+            <Link to="/userInfo">
+              <RiAccountCircleFill className="relative z-10 text-5xl text-gray-500" />
+            </Link>
+          ) : (
+            <div className="flex space-x-4">
+              <Link to="/login">
+                <Button variant="contained" sx={{ p: 2 }}>
+                  Login
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button variant="contained" sx={{ p: 2 }}>
+                  Signup
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
-      <Link to="/userInfo">
-        <RiAccountCircleFill className="relative z-10 text-5xl text-gray-500" />
-      </Link>
     </div>
   );
 };
