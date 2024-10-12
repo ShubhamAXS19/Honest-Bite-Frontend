@@ -207,7 +207,7 @@ const ShareSlice = () => {
           <h2 className="font-semibold text-xl mb-4">Slice Preference</h2>
 
           {/* Crust Type Selection */}
-          <div className=" w-[70vw] w-[70vw] flex flex-col items-start mb-4">
+          <div className=" w-[70vw] flex flex-col items-start mb-4">
             <label className="mb-2">Crust</label>
             <select
               value={selectedCrust}

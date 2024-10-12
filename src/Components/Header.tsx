@@ -37,8 +37,8 @@ const Header = () => {
 
     const selectGif = (weatherData: any) => {
       if (weatherData) {
-        // const weatherCondition = weatherData.weather[0].main.toLowerCase();
-        const weatherCondition = "rain";
+        const weatherCondition = weatherData.weather[0].main.toLowerCase();
+        // const weatherCondition = "rain";
         switch (weatherCondition) {
           case "clear":
             setGif(Sunny);

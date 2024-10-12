@@ -8,7 +8,7 @@ import paneerTikka from "../../assets/paneer-tikka.png";
 import pasta from "../../assets/pasta.png";
 import IdliSambhar from "../../assets/idli-with-sambar.png";
 import ragda from "../../assets/ragda.png";
-import samosaJalebi from "../../assets/samosa-jalebi.png";
+
 // Update the icons array to include both image and name
 const icons = [
   { src: pizzaSlice, name: "Pizza" },
@@ -21,7 +21,6 @@ const icons = [
   { src: ragda, name: "Ragda Pattice" },
   { src: paneerTikka, name: "Paneer Tikka" },
   { src: pasta, name: "Pasta" },
-  // { src: samosaJalebi, name: "Samosa and Jalebi" },
 ];
 
 const FoodCard = () => {
