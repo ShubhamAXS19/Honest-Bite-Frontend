@@ -4,11 +4,14 @@ import Banner from "../Components/Banner";
 import SpotCard from "../Components/SpotCard";
 import FoodCard from "../Components/FoodCard";
 import { AiOutlineThunderbolt } from "react-icons/ai";
-import DetailCard from "../Components/DetailCard";
+import ScrollableCardRow from "../Components/DetailCard";
 import { Link } from "react-router-dom";
-const Homepage = () => {
-  const leftImages = ["../../assets/tsco.jpg", "../../assets/sandwich.jpg"];
+import { useRecoilValue } from "recoil";
+import { getAllPostsAtom } from "../Store/Atoms/postAtom";
 
+const Homepage = () => {
+  const allPosts = useRecoilValue(getAllPostsAtom);
+  const leftImages = ["../../assets/taco.jpg", "../../assets/sandwich.jpg"];
   const rightImages = ["../../assets/pav-bhaji.jpg", "../../assets/burger.jpg"];
 
   return (
@@ -29,13 +32,15 @@ const Homepage = () => {
       </div>
       {/* menu */}
       <div className="flex justify-center">
-        <div className="inline-flex items-center justify-center pt-1 pb-1 px-4 rounded-lg shadow-md border border-gray-300">
-          <button className="flex-1 text-center ">Recommendation</button>
-          <div className="border-l-2 h-6 mx-4"></div>
-          <button className="flex items-center flex-1 justify-center">
+        <div className="inline-flex items-center justify-center rounded-lg shadow-md border border-gray-300">
+          <div className="flex-1 text-center py-1 px-4 rounded-lg">
+            <p>Recommendation</p>
+          </div>
+          <div className="border-l-2 h-6"></div>
+          <div className="flex items-center flex-1 justify-center py-1 px-4 rounded-lg">
             <IoHeartOutline />
             <p className="pl-2">Favourites</p>
-          </button>
+          </div>
         </div>
       </div>
       {/* card */}
@@ -63,20 +68,25 @@ const Homepage = () => {
       <div className="flex items-center justify-center my-6">
         <div className="flex-grow border-t-2 mx-4"></div>
         <div className="flex justify-center">
-          <div className="inline-flex items-center justify-center py-2 px-4 rounded-lg shadow-md border border-gray-300">
-            <button className="flex-2 text-center ">All</button>
-            <div className="border-l-2 h-6 mx-2"></div>
-            <button className="flex items-center flex-2 justify-center">
-              <AiOutlineThunderbolt size={20} />
-              <p className="pl-2">NEAR & FAST</p>
-            </button>
+          <div className="inline-flex items-center justify-center rounded-lg shadow-md border border-gray-300">
+            <div className="flex-2 text-center py-2 px-4  rounded-lg">
+              <Link to="/">
+                <p>All</p>
+              </Link>
+            </div>
+            <div className="border-l-2 h-6"></div>
+            <Link to="/nearby-spot">
+              <div className="flex items-center flex-2 justify-center py-2 px-4 rounded-lg">
+                {" "}
+                <AiOutlineThunderbolt size={20} />
+                <p>NEAR & FAST</p>
+              </div>
+            </Link>
           </div>
         </div>
         <div className="flex-grow border-t-2 mx-4"></div>
       </div>
-      <Link to="/detail">
-        <DetailCard />
-      </Link>
+      <ScrollableCardRow allPosts={allPosts} />
       {/* </div> */}
       <div className="mb-40"></div>
     </>

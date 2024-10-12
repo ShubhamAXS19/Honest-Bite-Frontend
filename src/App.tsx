@@ -30,7 +30,17 @@ function App() {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/share-a-slice" element={<ShareSlice />} />
           <Route path="/nearby-spot" element={<NearbySpot />} />
-          <Route path="/trending" element={<Trending />} />
+          {/* <Route path="/trending" element={<Trending />} /> */}
+          <Route
+            path="/trending"
+            element={
+              <ErrorBoundary>
+                <Suspense fallback={<Fallback />}>
+                  <Trending />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
           <Route path="/edit-post" element={<EditPost />} />
           <Route path="/test" element={<Test />} />
         </Route>

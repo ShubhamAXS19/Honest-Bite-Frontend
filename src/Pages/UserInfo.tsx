@@ -5,9 +5,11 @@ import { userAtom } from "../Store/Atoms/userAtom";
 
 const UserInfo = () => {
   const userData = useRecoilValue(userAtom);
+  const postDeatils = useRecoilValue(userAtom);
+  const { posts } = postDeatils;
   console.log(userData);
   return (
-    <div className="flex flex-col items-center justify-center w-full  my-10 mx-8">
+    <div className="flex flex-col items-center justify-center w-[80vw]  my-10 mx-8">
       {/* Avatar */}
       <div className="mb-6">
         <img
@@ -21,12 +23,16 @@ const UserInfo = () => {
       <div className="flex items-center justify-evenly w-full my-6">
         <div className="flex flex-col items-center mx-6">
           <p className="text-2xl font-semibold">Followers</p>
-          <p className="text-xl text-center">100</p>
+          <p className="text-xl text-center">
+            {userData ? userData.followers : "0"}
+          </p>
         </div>
 
         <div className="flex flex-col items-center mx-6">
           <p className="text-2xl font-semibold">Following</p>
-          <p className="text-xl text-center">10</p>
+          <p className="text-xl text-center">
+            {userData ? userData.following : "0"}
+          </p>
         </div>
       </div>
 
@@ -41,12 +47,15 @@ const UserInfo = () => {
           </p>
         </div>
         <div className="flex mt-8 justify-between">
-          <p className="text-xl">Email</p>
+          <p className="text-xl">
+            {userData ? userData.email : "xyz@gmail.com"}
+          </p>
           <p className="text-xl">Phone Number</p>
         </div>
         <div className="text-xl text-center mt-4 p-4 border rounded-md bg-gray-100">
-          Bio goes here. This section can contain a brief description of the
-          user.
+          {userData
+            ? userData.bio
+            : "Bio goes here. This section can contain a brief description of the Bio"}
         </div>
       </div>
 
@@ -60,9 +69,13 @@ const UserInfo = () => {
       {/* Horizontal Scroll Container for Posts */}
       <div className="overflow-x-auto mx-4 my-2 py-2 w-full ">
         <div className="flex h-20vh">
-          <UserPostCard showEditButton={false} />
-          <UserPostCard showEditButton={false} />
-          <UserPostCard showEditButton={false} />
+          {posts.map((post) => (
+            <UserPostCard
+              key={post._id}
+              postsData={post}
+              showEditButton={true}
+            />
+          ))}
         </div>
       </div>
 
@@ -76,9 +89,13 @@ const UserInfo = () => {
       {/* Another Horizontal Scroll Container for Top Posts */}
       <div className="overflow-x-auto mx-4 my-2 py-2 w-full">
         <div className="flex space-x-4">
-          <UserPostCard showEditButton={false} />
-          <UserPostCard showEditButton={false} />
-          <UserPostCard showEditButton={false} />
+          {posts.map((post) => (
+            <UserPostCard
+              key={post._id}
+              postsData={post}
+              showEditButton={false}
+            />
+          ))}
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ import {
 } from "recharts";
 
 const AnalyticsChart = ({ data, title }) => {
-  const [timePeriod, setTimePeriod] = useState("week");
+  const [timePeriod, setTimePeriod] = useState("year");
   const [chartType, setChartType] = useState("bar"); // New state for chart type
 
   const handleTimePeriodChange = (event) => {
@@ -68,7 +68,7 @@ const AnalyticsChart = ({ data, title }) => {
 export default AnalyticsChart;
 
 export const AnalyticsLineChart = ({ data, title }) => {
-  const [timePeriod, setTimePeriod] = useState("week");
+  const [timePeriod, setTimePeriod] = useState("year");
   const [chartType, setChartType] = useState("line"); // New state for chart type
 
   const handleTimePeriodChange = (event) => {

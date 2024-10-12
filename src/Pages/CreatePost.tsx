@@ -1,15 +1,19 @@
-import { useState, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 import { FiPlus, FiX } from "react-icons/fi";
 import { Button, TextField } from "@mui/material";
-import axios from "axios";
 
 const ImageUploader = () => {
   const [images, setImages] = useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [selectedDietary, setSelectedDietary] = useState<string>("");
   const [selectedCuisine, setSelectedCuisine] = useState<string>("");
   const [selectedMeal, setSelectedMeal] = useState<string>("");
   const [caption, setCaption] = useState<string>("");
   const [location, setLocation] = useState<string>("");
+  const [spotName, setSpotName] = useState<string>("");
   const mealOptions = ["Breakfast", "Lunch", "Dinner"];
   const dietaryOptions = [
     "Non-Veg",
@@ -27,47 +31,97 @@ const ImageUploader = () => {
     "Thai",
     "Japanese",
   ];
+
+  const navigate = useNavigate();
   const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!location.trim()) {
+      toast.error("Location is required!");
+      return;
+    }
     try {
-      const response = await axios.post(
-        "http://localhost:3000/v1/post/create-post",
-        {
-          img: images,
-          caption: caption,
-          location: location,
-          Dietary: selectedDietary,
-          Cuisine: selectedCuisine,
-          mealType: selectedMeal,
-          tags: [selectedDietary, selectedCuisine, selectedMeal],
-        },
-        {
+      const token =
+        "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzA5NWEwMTU0ZjQ1ZTVjNDFjZGU2NGQiLCJlbWFpbCI6InN2NzczNDYwQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6InNodWJoYW0iLCJsYXN0TmFtZSI6InZpc2h3YWthcm1hIiwicG9zdHMiOltdLCJib29rbWFya3MiOltdLCJmYXYiOltdLCJjcmVhdGVkQXQiOiIyMDI0LTEwLTExVDE3OjAxOjUzLjI0NFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTEwLTExVDE3OjAyOjAyLjQ0NloiLCJpYXQiOjE3Mjg2NjYxMjYsImV4cCI6MTczMTI1ODEyNn0.Di31cZ0oLFdrz4P8SI4LS9y1fDDJCb7FW6q7Mq1Yq4eOm5XPLFmvRoL346jmhe2Y5o8XRoM8wLgT-aYfnqUhtRuFH8DcHyTz1ykRODU0MYEwYk-XPAzai7zu0920v2hnjIKrFPpuii0mmj7uBPjLK85FJJl_wOIO4UHkmbvNAv8";
+      const formData = new FormData();
+
+      // Append each file to formData
+      selectedFiles.forEach((file) => {
+        formData.append("img", file);
+      });
+
+      // Append other form data
+      formData.append("caption", caption);
+      formData.append("location", location);
+      formData.append("Dietary", selectedDietary);
+      formData.append("Cuisine", selectedCuisine);
+      formData.append("mealType", selectedMeal);
+      formData.append("name", spotName); // Add this line in your frontend code
+      // Convert array to string for tags
+      [selectedDietary, selectedCuisine, selectedMeal].forEach((tag) => {
+        formData.append("tags", tag);
+      });
+
+      await toast.promise(
+        axios.post("http://localhost:3000/v1/post/create-post", formData, {
           headers: {
-            // Authorization: `Bearer ${localStorage.getItem("token")}`,
-            Authorization: `Bearer ${"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmZmOGIxMTI5ZmY3YTVlYjdjZDY4MzUiLCJlbWFpbCI6InN2NzczNDYwQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6IlNodWJoYW0iLCJsYXN0TmFtZSI6IlZpc2h3YWthcm1hIiwicG9zdHMiOltdLCJjcmVhdGVkQXQiOiIyMDI0LTEwLTA0VDA2OjI4OjMzLjIyM1oiLCJ1cGRhdGVkQXQiOiIyMDI0LTEwLTA0VDA2OjI5OjA0LjAwOFoiLCJpYXQiOjE3MjgwMzMwNjQsImV4cCI6MTcyODAzMzk2NH0.agVeZsrwDvXo14jGj4aKonSZ0SBJ0QI2iqxndPsWySdJbLqr8T0Nc6nG51G66QnLQ4xGS6YjklNzv2rFGExCS1TNgK_ORAZn67L9-C-a3xDOrSVT6iBFS51wuVsGEU2S8ib-UmCfUbNEAZPRaxIDSWaJa1KNjNTZJfuOPe28E3Q"}`,
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }),
+        {
+          loading: "Creating Post...",
+          success: (res) => {
+            // Show toast for successful verification
+            toast.success("Post Created.");
+            // Show another toast for redirecting
+            toast("Redirecting to your profile page...", {
+              duration: 3000,
+              icon: "🚀",
+            });
+            // Redirect after a delay
+            setTimeout(() => {
+              navigate("/userInfo");
+            }, 2500);
+          },
+          error: (err) => {
+            console.error(err);
+            return "Something went wrong. Please try again.";
           },
         }
       );
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error creating post: ", error);
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      const newImages = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
-      );
+      // Store the actual files
+      const newFiles = Array.from(files);
+      setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+
+      // Create preview URLs
+      const newImages = newFiles.map((file) => URL.createObjectURL(file));
       setImages((prevImages) => [...prevImages, ...newImages]);
     }
   };
 
   const handleRemoveImage = (index: number) => {
+    // Clean up the URL object to prevent memory leaks
+    URL.revokeObjectURL(images[index]);
+
+    // Remove the image and file from both states
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
+
+  useEffect(() => {
+    return () => {
+      images.forEach(URL.revokeObjectURL);
+    };
+  }, []);
 
   return (
     <>
@@ -139,6 +193,21 @@ const ImageUploader = () => {
           />
         </div>
 
+        {/* Spot Name Input */}
+        <div className="flex flex-col items-center justify-center pt-12">
+          <TextField
+            placeholder="Spot Name"
+            variant="outlined"
+            multiline
+            fullWidth
+            sx={{
+              width: "70vw",
+              borderRadius: "8px",
+              borderColor: "gray",
+            }}
+            onChange={(e) => setSpotName(e.target.value)}
+          />
+        </div>
         {/* Location Input */}
         <div className="flex flex-col items-center justify-center pt-12">
           <TextField
@@ -251,6 +320,7 @@ const ImageUploader = () => {
         </div>
       </form>
       {/* Bottom Margin for Spacing */}
+      <Toaster position="top-right" />
       <div className="mb-40"></div>
     </>
   );

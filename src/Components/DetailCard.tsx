@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -7,10 +6,10 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-import biryani from "../../assets/biryani.jpg";
-import burger from "../../assets/burger.jpg";
-import QUESADILLA from "../../assets/QUESADILLA.jpg";
-
+import { CiHeart } from "react-icons/ci";
+import { IoShareSocialOutline } from "react-icons/io5";
+import { AiOutlineLike } from "react-icons/ai";
+import { CiBookmark } from "react-icons/ci";
 const Card = styled.div`
   background-color: white;
   padding: 16px;
@@ -52,10 +51,15 @@ const Tag = styled.p`
   font-size: 0.875rem;
 `;
 
-const Offer = styled.p`
-  color: #38a169;
-  font-weight: 600;
+const Caption = styled.p`
+  color: #4a5568;
   margin-top: 8px;
+`;
+
+const Location = styled.p`
+  color: #718096;
+  font-size: 0.875rem;
+  margin-top: 4px;
 `;
 
 const Divider = styled.hr`
@@ -64,7 +68,7 @@ const Divider = styled.hr`
   margin: 16px 0;
 `;
 
-const DetailCard: React.FC = () => {
+const DetailCard = ({ post }) => {
   return (
     <Card>
       <Swiper
@@ -72,67 +76,61 @@ const DetailCard: React.FC = () => {
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
-        autoplay={{ delay: 1500 }} // Add autoplay configuration here
-        modules={[Navigation, Pagination, Autoplay]} // Add Autoplay module here
+        autoplay={{ delay: 2000 }}
+        modules={[Navigation, Pagination, Autoplay]}
       >
-        <SwiperSlide>
-          <img
-            src={biryani}
-            alt="Image 1"
-            style={{
-              width: "100%",
-              height: "160px",
-              objectFit: "cover",
-              borderRadius: "8px 8px 0 0",
-            }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={burger}
-            alt="Image 2"
-            style={{
-              width: "100%",
-              height: "160px",
-              objectFit: "cover",
-              borderRadius: "8px 8px 0 0",
-            }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={QUESADILLA}
-            alt="Image 3"
-            style={{
-              width: "100%",
-              height: "160px",
-              objectFit: "cover",
-              borderRadius: "8px 8px 0 0",
-            }}
-          />
-        </SwiperSlide>
+        {post.img.map((image, index) => (
+          <SwiperSlide key={index}>
+            <img
+              src={image}
+              alt={`Image ${index + 1}`}
+              style={{
+                width: "100%",
+                height: "200px",
+                objectFit: "cover",
+                borderRadius: "8px 8px 0 0",
+              }}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
-      <RestaurantName>Restaurant Name</RestaurantName>
+      <RestaurantName>{post.name}</RestaurantName>
       <Info>
-        <Tag>Tag 1</Tag>
-        <Tag>Tag 2</Tag>
+        {post.tags.map((tag, index) => (
+          <Tag key={index}>{tag}</Tag>
+        ))}
       </Info>
+      <Caption>{post.caption}</Caption>
+      <Location>{post.location}</Location>
       <Divider />
-      <Offer>20% OFF up to $20</Offer>
+      <div className="flex items-center justify-between">
+        {" "}
+        <div className="flex items-center justify-center gap-1">
+          <AiOutlineLike size={20} />
+          <p>Likes: {post.likes}</p>
+        </div>
+        <div className="flex items-center justify-center gap-1">
+          <IoShareSocialOutline size={20} />
+          <p>Shares: {post.shares}</p>
+        </div>
+        <div>
+          <CiHeart size={20} />
+        </div>
+        <div>
+          <CiBookmark size={20} />
+        </div>
+      </div>
     </Card>
   );
 };
 
-// This component will render multiple DetailCards in a scrollable row
-const ScrollableCardRow: React.FC = () => {
+const ScrollableCardRow = ({ allPosts }) => {
   return (
     <CardsContainer>
-      <DetailCard />
-      <DetailCard />
-      <DetailCard />
-      <DetailCard />
-      {/* Add more DetailCard components as needed */}
+      {allPosts.map((post) => (
+        <DetailCard key={post._id} post={post} />
+      ))}
     </CardsContainer>
   );
 };

@@ -8,10 +8,15 @@ import Rain from "../../assets/Rain.mp4";
 import Cloudy from "../../assets/Cloudy.mp4";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import { useRecoilValue } from "recoil";
+import { userAtom } from "../Store/Atoms/userAtom";
+
 const Header = () => {
   const [weather, setWeather] = useState<any | null>(null);
   const [gif, setGif] = useState<string>("");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const userInfo = useRecoilValue(userAtom);
+
+  const isLoggedIn = userInfo && userInfo.status !== 403;
 
   useEffect(() => {
     // Function to get user's current location
@@ -92,23 +97,29 @@ const Header = () => {
 
         {/* Right section (Login/Signup or User Icon) */}
         <div>
-          {isLoggedIn ? (
-            <Link to="/userInfo">
-              <RiAccountCircleFill className="relative z-10 text-5xl text-gray-500" />
-            </Link>
-          ) : (
+          {!isLoggedIn ? (
             <div className="flex space-x-4">
               <Link to="/login">
-                <Button variant="contained" sx={{ p: 2 }}>
+                <Button
+                  variant="contained"
+                  sx={{ p: 2, borderRadius: 4, width: "6rem" }}
+                >
                   Login
                 </Button>
               </Link>
               <Link to="/register">
-                <Button variant="contained" sx={{ p: 2 }}>
+                <Button
+                  variant="contained"
+                  sx={{ p: 2, borderRadius: 4, width: "6rem" }}
+                >
                   Signup
                 </Button>
               </Link>
             </div>
+          ) : (
+            <Link to="/userInfo">
+              <RiAccountCircleFill className="relative z-10 text-5xl text-gray-500" />
+            </Link>
           )}
         </div>
       </div>
