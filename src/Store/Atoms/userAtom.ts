@@ -9,7 +9,7 @@ export const userAtom = atom({
     get: async () => {
       try {
         const token =
-          "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb2xsb3dlcnMiOjAsImZvbGxvd2luZyI6MCwiX2lkIjoiNjcwOTVhMDE1NGY0NWU1YzQxY2RlNjRkIiwiZW1haWwiOiJzdjc3MzQ2MEBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJzaHViaGFtIiwibGFzdE5hbWUiOiJ2aXNod2FrYXJtYSIsInBvc3RzIjpbIjY3MDk1YWY0NTRmNDVlNWM0MWNkZTY1YyIsIjY3MDk2YTMzNmE0MDU5ZDBjNDMyYjA3MyIsIjY3MDk2YzE0OWJiNTI2YjJjM2MwMWRkMiIsIjY3MDk2Yzg1MWJjYzljZmU4NjAzNmU1YSIsIjY3MDk3Mjc1MjY4OTJlNmMzMzdiNTJjZCIsIjY3MDk3MmE1MjY4OTJlNmMzMzdiNTJkMyJdLCJib29rbWFya3MiOltdLCJmYXYiOltdLCJjcmVhdGVkQXQiOiIyMDI0LTEwLTExVDE3OjAxOjUzLjI0NFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTEwLTExVDE4OjQ3OjAxLjc1NFoiLCJpYXQiOjE3Mjg2NzI1OTAsImV4cCI6MTczMTI2NDU5MH0.cZP8ih6Gok7Bc6EHZ40psD5Jx1fmm1hDDvr5hmw8_GcCxHL_4iZbVTyao_vqH19ywrCEsaEVa7ks0ccF4tVrJ4eW1VDGaO5KX-3KjyqDRdXEfjBbQktP0kuz5PoQC6becG-no91NMRkb4G5ehKEh-FLVpafKNWeRwdKd1Bjm6VA";
+          "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzBhOGNhZGRiMjA3MTJkMzg2NmVmZWUiLCJlbWFpbCI6InN2NzczNDYwQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6InNodWJoYW0iLCJsYXN0TmFtZSI6InZpc2h3YWthcm1hIiwicG9zdHMiOlsiNjcwYTkxNWNhNDQ3YTQ2ODM2NTJiMGU4IiwiNjcwYTkxOWRhNDQ3YTQ2ODM2NTJiMGViIiwiNjcwYTkyNTZhNDQ3YTQ2ODM2NTJiMGVlIiwiNjcwYTkyZGRhNDQ3YTQ2ODM2NTJiMGYxIiwiNjcwYTkzMzZhNDQ3YTQ2ODM2NTJiMGY0IiwiNjcwYTkzOTBhNDQ3YTQ2ODM2NTJiMGY3IiwiNjcwYTkzZjBhNDQ3YTQ2ODM2NTJiMGZhIiwiNjcwYTk0NGZhNDQ3YTQ2ODM2NTJiMGZkIiwiNjcwYTk2NDhhNDQ3YTQ2ODM2NTJiMTAwIiwiNjcwYTk2OGNhNDQ3YTQ2ODM2NTJiMTAzIiwiNjcwYTk2ZDBhNDQ3YTQ2ODM2NTJiMTA2IiwiNjcwYTk3MjVhNDQ3YTQ2ODM2NTJiMTA5IiwiNjcwYTk3NmFhNDQ3YTQ2ODM2NTJiMTBjIiwiNjcwYTk3Y2NhNDQ3YTQ2ODM2NTJiMTBmIiwiNjcwYTk4MTFhNDQ3YTQ2ODM2NTJiMTEyIiwiNjcwYTk4NjdhNDQ3YTQ2ODM2NTJiMTE1IiwiNjcwYTk4ZDFhNDQ3YTQ2ODM2NTJiMTE4IiwiNjcwYTk5MTRhNDQ3YTQ2ODM2NTJiMTFiIiwiNjcwYTk5OGNhNDQ3YTQ2ODM2NTJiMTFlIiwiNjcwYWEwZWFmMjBkNzYzYTgyNmE3ZjQ1Il0sImZvbGxvd2VycyI6MTAsImZvbGxvd2luZyI6MTAsImJvb2ttYXJrcyI6W10sImZhdiI6W10sImNyZWF0ZWRBdCI6IjIwMjQtMTAtMTJUMTQ6NTA6MjEuNzMwWiIsInVwZGF0ZWRBdCI6IjIwMjQtMTAtMTJUMTY6MTY6NDIuMTgzWiIsImlhdCI6MTcyODc1MDEzNSwiZXhwIjoxNzMxMzQyMTM1fQ.Fk2QSCCQakqPbH6KdMoHpyGxVzE9uOguaK1KFa_CW33dVF4-txGBmXzsyIKGRajF3IKfsNQS0RMdAw0WHPF2yd7oQ-4QkAND1V0eEpn_MK_mdZ3z9hLi_yzF4Z-1tnWokINvJ9UaMrxzAXHebUYIff0nkrIMrYGqVDSKqJW86Ks";
         const userId = localStorage.getItem("userId");
         const response = await axios.get(
           `http://localhost:3000/v1/auth/${userId}/me`,
@@ -20,7 +20,10 @@ export const userAtom = atom({
             },
           }
         );
-        return response.data;
+        return {
+          ...response.data,
+          tempBookmarks: [...response.data.bookmarks], // Add tempBookmarks
+        };
       } catch (error) {
         console.error("Error fetching user data: ", error);
         return null;
@@ -28,3 +31,47 @@ export const userAtom = atom({
     },
   }),
 });
+
+// export const bookmarkAtom = atom({
+//   key: "bookmarkAtom",
+//   default: selector({
+//     key: "bookmarkAtomSelector",
+//     get: async (userId, bookmarks) => {
+//       try {
+//         const token =
+//           "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzBhOGNhZGRiMjA3MTJkMzg2NmVmZWUiLCJlbWFpbCI6InN2NzczNDYwQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6InNodWJoYW0iLCJsYXN0TmFtZSI6InZpc2h3YWthcm1hIiwicG9zdHMiOlsiNjcwYTkxNWNhNDQ3YTQ2ODM2NTJiMGU4IiwiNjcwYTkxOWRhNDQ3YTQ2ODM2NTJiMGViIiwiNjcwYTkyNTZhNDQ3YTQ2ODM2NTJiMGVlIiwiNjcwYTkyZGRhNDQ3YTQ2ODM2NTJiMGYxIiwiNjcwYTkzMzZhNDQ3YTQ2ODM2NTJiMGY0IiwiNjcwYTkzOTBhNDQ3YTQ2ODM2NTJiMGY3IiwiNjcwYTkzZjBhNDQ3YTQ2ODM2NTJiMGZhIiwiNjcwYTk0NGZhNDQ3YTQ2ODM2NTJiMGZkIiwiNjcwYTk2NDhhNDQ3YTQ2ODM2NTJiMTAwIiwiNjcwYTk2OGNhNDQ3YTQ2ODM2NTJiMTAzIiwiNjcwYTk2ZDBhNDQ3YTQ2ODM2NTJiMTA2IiwiNjcwYTk3MjVhNDQ3YTQ2ODM2NTJiMTA5IiwiNjcwYTk3NmFhNDQ3YTQ2ODM2NTJiMTBjIiwiNjcwYTk3Y2NhNDQ3YTQ2ODM2NTJiMTBmIiwiNjcwYTk4MTFhNDQ3YTQ2ODM2NTJiMTEyIiwiNjcwYTk4NjdhNDQ3YTQ2ODM2NTJiMTE1IiwiNjcwYTk4ZDFhNDQ3YTQ2ODM2NTJiMTE4IiwiNjcwYTk5MTRhNDQ3YTQ2ODM2NTJiMTFiIiwiNjcwYTk5OGNhNDQ3YTQ2ODM2NTJiMTFlIiwiNjcwYWEwZWFmMjBkNzYzYTgyNmE3ZjQ1Il0sImZvbGxvd2VycyI6MTAsImZvbGxvd2luZyI6MTAsImJvb2ttYXJrcyI6W10sImZhdiI6W10sImNyZWF0ZWRBdCI6IjIwMjQtMTAtMTJUMTQ6NTA6MjEuNzMwWiIsInVwZGF0ZWRBdCI6IjIwMjQtMTAtMTJUMTY6MTY6NDIuMTgzWiIsImlhdCI6MTcyODc1MDEzNSwiZXhwIjoxNzMxMzQyMTM1fQ.Fk2QSCCQakqPbH6KdMoHpyGxVzE9uOguaK1KFa_CW33dVF4-txGBmXzsyIKGRajF3IKfsNQS0RMdAw0WHPF2yd7oQ-4QkAND1V0eEpn_MK_mdZ3z9hLi_yzF4Z-1tnWokINvJ9UaMrxzAXHebUYIff0nkrIMrYGqVDSKqJW86Ks";
+//         await axios.patch(
+//           `http://localhost:3000/v1/auth/${userId}/edit-me`,
+//           { bookmarks },
+//           {
+//             headers: {
+//               Authorization: `Bearer ${token}`,
+//             },
+//           }
+//         );
+//         console.log("Bookmarks synced successfully!");
+//       } catch (error) {
+//         console.error("Error syncing bookmarks:", error);
+//       }
+//     },
+//   }),
+// });
+
+export const syncBookmarks = async (userId: string, bookmarks: []) => {
+  try {
+    const token =
+      "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzBhOGNhZGRiMjA3MTJkMzg2NmVmZWUiLCJlbWFpbCI6InN2NzczNDYwQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6InNodWJoYW0iLCJsYXN0TmFtZSI6InZpc2h3YWthcm1hIiwicG9zdHMiOlsiNjcwYTkxNWNhNDQ3YTQ2ODM2NTJiMGU4IiwiNjcwYTkxOWRhNDQ3YTQ2ODM2NTJiMGViIiwiNjcwYTkyNTZhNDQ3YTQ2ODM2NTJiMGVlIiwiNjcwYTkyZGRhNDQ3YTQ2ODM2NTJiMGYxIiwiNjcwYTkzMzZhNDQ3YTQ2ODM2NTJiMGY0IiwiNjcwYTkzOTBhNDQ3YTQ2ODM2NTJiMGY3IiwiNjcwYTkzZjBhNDQ3YTQ2ODM2NTJiMGZhIiwiNjcwYTk0NGZhNDQ3YTQ2ODM2NTJiMGZkIiwiNjcwYTk2NDhhNDQ3YTQ2ODM2NTJiMTAwIiwiNjcwYTk2OGNhNDQ3YTQ2ODM2NTJiMTAzIiwiNjcwYTk2ZDBhNDQ3YTQ2ODM2NTJiMTA2IiwiNjcwYTk3MjVhNDQ3YTQ2ODM2NTJiMTA5IiwiNjcwYTk3NmFhNDQ3YTQ2ODM2NTJiMTBjIiwiNjcwYTk3Y2NhNDQ3YTQ2ODM2NTJiMTBmIiwiNjcwYTk4MTFhNDQ3YTQ2ODM2NTJiMTEyIiwiNjcwYTk4NjdhNDQ3YTQ2ODM2NTJiMTE1IiwiNjcwYTk4ZDFhNDQ3YTQ2ODM2NTJiMTE4IiwiNjcwYTk5MTRhNDQ3YTQ2ODM2NTJiMTFiIiwiNjcwYTk5OGNhNDQ3YTQ2ODM2NTJiMTFlIiwiNjcwYWEwZWFmMjBkNzYzYTgyNmE3ZjQ1Il0sImZvbGxvd2VycyI6MTAsImZvbGxvd2luZyI6MTAsImJvb2ttYXJrcyI6W10sImZhdiI6W10sImNyZWF0ZWRBdCI6IjIwMjQtMTAtMTJUMTQ6NTA6MjEuNzMwWiIsInVwZGF0ZWRBdCI6IjIwMjQtMTAtMTJUMTY6MTY6NDIuMTgzWiIsImlhdCI6MTcyODc1MDEzNSwiZXhwIjoxNzMxMzQyMTM1fQ.Fk2QSCCQakqPbH6KdMoHpyGxVzE9uOguaK1KFa_CW33dVF4-txGBmXzsyIKGRajF3IKfsNQS0RMdAw0WHPF2yd7oQ-4QkAND1V0eEpn_MK_mdZ3z9hLi_yzF4Z-1tnWokINvJ9UaMrxzAXHebUYIff0nkrIMrYGqVDSKqJW86Ks";
+    await axios.patch(
+      `http://localhost:3000/v1/auth/${userId}/edit-me`,
+      { bookmarks },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("Bookmarks synced successfully!");
+  } catch (error) {
+    console.error("Error syncing bookmarks:", error);
+  }
+};

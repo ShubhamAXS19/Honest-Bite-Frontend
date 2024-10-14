@@ -1,8 +1,9 @@
 import pizza from "../../assets/pizzaBanner.png";
+import { CreatorCardProps } from "../types/user";
 
-const CreatorCard = (creatorData) => {
+const CreatorCard: React.FC<CreatorCardProps> = () => {
   return (
-    <div className="w-[20vw] h-[40vh] p-4 flex flex-col rounded-lg shadow-md">
+    <div className="w-[15vw] h-[30vh] p-4 flex flex-col rounded-lg shadow-md">
       <img src={pizza} alt="" className="rounded-xl" />
       <p className="text-center py-4">
         Top {Math.round(Math.random() * 100) / 100} %

@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Button } from "@mui/material";
+import io from "socket.io-client";
+
+import { SelectFriend, ShareSliceInput } from "../Components/ShareSliceInput";
+// import { AddRoute1, AddRoute2 } from "../Components/AddRoute";
+
+const socket = io("http://localhost:3000", {
+  transports: ["websocket"],
+  reconnection: true,
+  reconnectionAttempts: 5,
+});
 
 const ShareSlice = () => {
   const [location, setLocation] = useState<{
@@ -9,8 +20,8 @@ const ShareSlice = () => {
     longitude: number;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [radius, setRadius] = useState(1000);
-  const [ppl, setPpl] = useState(0);
+  const [radius, setRadius] = useState<number>(1000);
+  const [ppl, setPpl] = useState<number>(0);
 
   const [selectedCrust, setSelectedCrust] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
@@ -24,6 +35,24 @@ const ShareSlice = () => {
   const [selectedVeganToppings, setSelectedVeganToppings] = useState<string[]>(
     []
   );
+
+  useEffect(() => {
+    // Connect to the WebSocket server
+    socket.connect();
+
+    // Emit a message when the component mounts (user connects)
+    socket.emit("userConnected", { message: "User connected to ShareSlice" });
+
+    // Listen for any messages from the server
+    socket.on("message", (data) => {
+      console.log("Received message from server:", data);
+    });
+
+    // Cleanup function
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   // Function to request the user's location
   const requestLocation = () => {
@@ -59,7 +88,7 @@ const ShareSlice = () => {
     return <p>Loading map...</p>;
   }
 
-  const position = [location.latitude, location.longitude];
+  const position: LatLngExpression = [location.latitude, location.longitude];
 
   // Handle radius input change
   const handleRadiusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,13 +106,8 @@ const ShareSlice = () => {
 
   const crustOptions = ["Thin", "Thick", "Stuffed"];
   const sizeOptions = ["Regular", "Medium", "Large"];
-  type ToppingsOptions = {
-    vegetarian: string[];
-    nonVegetarian: string[];
-    vegan: string[];
-  };
 
-  const toppingsOptions: ToppingsOptions = {
+  const toppingsOptions = {
     vegetarian: [
       "Corn & Cheese",
       "Onion & Capsicum",
@@ -97,18 +121,6 @@ const ShareSlice = () => {
   const sauceOptions = ["Tomato", "Pesto", "BBQ"];
   const cheeseOptions = ["Mozzarella", "Cheddar", "Regular"];
 
-  const handleCrustChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCrust(e.target.value);
-  };
-  const handleSauceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedSauce(e.target.value);
-  };
-  const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedSize(e.target.value);
-  };
-  const handleCheeseChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCheese(e.target.value);
-  };
   const handleVegToppingsChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -148,6 +160,24 @@ const ShareSlice = () => {
     setSelectedVeganToppings(selectedValues);
   };
 
+  const handleFindSlice = () => {
+    const pizzaPreferences = {
+      crust: selectedCrust,
+      size: selectedSize,
+      sauce: selectedSauce,
+      cheese: selectedCheese,
+      vegToppings: selectedVegToppings,
+      nonVegToppings: selectedNonVegToppings,
+      veganToppings: selectedVeganToppings,
+      people: ppl,
+      radius: radius,
+      location: location,
+    };
+
+    // Emit the pizza preferences to the server
+    socket.emit("findSlice", pizzaPreferences);
+  };
+
   return (
     <>
       <MapContainer
@@ -163,13 +193,19 @@ const ShareSlice = () => {
         <Marker position={position}>
           <Popup>You</Popup>
         </Marker>
-        <Circle
-          center={position}
-          radius={radius}
-          color="blue"
-          fillColor="blue"
-          fillOpacity={0.2}
-        />
+        {/* <Marker position={userLocation}>
+          <Popup>Your Location</Popup>
+        </Marker>
+        {matchLocation && (
+          <Marker position={matchLocation}>
+            <Popup>Match Location</Popup>
+          </Marker>
+        )}
+        <Marker position={pizzaSpotLocation}>
+          <Popup>Pizza Spot</Popup>
+        </Marker>*/}
+        {/* <AddRoute1 /> */}
+        {/* <AddRoute2 /> */}
       </MapContainer>
 
       {/* Input for changing radius */}
@@ -191,153 +227,41 @@ const ShareSlice = () => {
 
       <div className="flex flex-col items-center justify-center pt-12">
         {/* Number of People */}
-        <div className="w-[70vw] flex flex-col items-start">
-          <label className="mb-2">Select number of people</label>
-          <input
-            type="number"
-            value={ppl}
-            onChange={handleNumofppl}
-            min={0}
-            className="w-full border border-gray-300 rounded-lg p-2"
-          />
-        </div>
-
+        <SelectFriend numPeople={ppl} handleNumofppl={handleNumofppl} />
         {/* Slice Preference */}
         <div className=" flex flex-col items-start mt-6">
           <h2 className="font-semibold text-xl mb-4">Slice Preference</h2>
 
           {/* Crust Type Selection */}
-          <div className=" w-[70vw] flex flex-col items-start mb-4">
-            <label className="mb-2">Crust</label>
-            <select
-              value={selectedCrust}
-              onChange={handleCrustChange}
-              className="w-full border border-gray-300 rounded-lg p-2"
-            >
-              <option value="" disabled>
-                Select Crust
-              </option>
-              {crustOptions.map((crust, index) => (
-                <option key={index} value={crust}>
-                  {crust}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Size Selection */}
-          <div className="w-[70vw] flex flex-col items-start mb-4">
-            <label className="mb-2">Size</label>
-            <select
-              value={selectedSize}
-              onChange={handleSizeChange}
-              className="w-full border border-gray-300 rounded-lg p-2"
-            >
-              <option value="" disabled>
-                Select Size
-              </option>
-              {sizeOptions.map((size, index) => (
-                <option key={index} value={size}>
-                  {size}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Toppings Selection */}
-          <div className="w-[70vw] flex flex-col items-start mb-4">
-            <h3 className="font-semibold text-lg mb-2">Toppings</h3>
-
-            <h4 className="font-medium mb-2">Vegetarian</h4>
-            <select
-              value={selectedVegToppings}
-              onChange={handleVegToppingsChange}
-              className="w-full border border-gray-300 rounded-lg p-2 mb-4"
-            >
-              <option value="" disabled>
-                Select Vegetarian Toppings
-              </option>
-              {toppingsOptions.vegetarian.map((topping, index) => (
-                <option key={index} value={topping}>
-                  {topping}
-                </option>
-              ))}
-            </select>
-
-            <h4 className="font-medium mb-2">Non-Vegetarian</h4>
-            <select
-              value={selectedNonVegToppings}
-              onChange={handleNonVegToppingsChange}
-              className="w-full border border-gray-300 rounded-lg p-2 mb-4"
-            >
-              <option value="" disabled>
-                Select Non-Vegetarian Toppings
-              </option>
-              {toppingsOptions.nonVegetarian.map((topping, index) => (
-                <option key={index} value={topping}>
-                  {topping}
-                </option>
-              ))}
-            </select>
-
-            <h4 className="font-medium mb-2">Vegan</h4>
-            <select
-              value={selectedVeganToppings}
-              onChange={handleVeganToppingsChange}
-              className="w-full border border-gray-300 rounded-lg p-2"
-            >
-              <option value="" disabled>
-                Select Vegan Toppings
-              </option>
-              {toppingsOptions.vegan.map((topping, index) => (
-                <option key={index} value={topping}>
-                  {topping}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Sauce Preference */}
-          <div className="w-[70vw] flex flex-col items-start mb-4">
-            <label className="mb-2">Sauce</label>
-            <select
-              value={selectedSauce}
-              onChange={handleSauceChange}
-              className="w-full border border-gray-300 rounded-lg p-2"
-            >
-              <option value="" disabled>
-                Select Sauce
-              </option>
-              {sauceOptions.map((sauce, index) => (
-                <option key={index} value={sauce}>
-                  {sauce}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Cheese Options */}
-          <div className="w-[70vw] flex flex-col items-start">
-            <label className="mb-2">Cheese</label>
-            <select
-              value={selectedCheese}
-              onChange={handleCheeseChange}
-              className="w-full border border-gray-300 rounded-lg p-2"
-            >
-              <option value="" disabled>
-                Select Cheese
-              </option>
-              {cheeseOptions.map((cheese, index) => (
-                <option key={index} value={cheese}>
-                  {cheese}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ShareSliceInput
+            selectedCrust={selectedCrust}
+            setSelectedCrust={setSelectedCrust}
+            crustOptions={crustOptions}
+            selectedSize={selectedSize}
+            setSelectedSize={setSelectedSize}
+            sizeOptions={sizeOptions}
+            selectedVegToppings={selectedVegToppings}
+            selectedNonVegToppings={selectedNonVegToppings}
+            selectedVeganToppings={selectedVeganToppings}
+            toppingsOptions={toppingsOptions}
+            selectedSauce={selectedSauce}
+            setSelectedSauce={setSelectedSauce}
+            sauceOptions={sauceOptions}
+            selectedCheese={selectedCheese}
+            setSelectedCheese={setSelectedCheese}
+            cheeseOptions={cheeseOptions}
+            handleVegToppingsChange={handleVegToppingsChange}
+            handleNonVegToppingsChange={handleNonVegToppingsChange}
+            handleVeganToppingsChange={handleVeganToppingsChange}
+          />
         </div>
       </div>
       <div className=" flex items-center justify-center">
-        <Button variant="contained" sx={{ mt: 4, p: 2 }}>
+        <Button
+          variant="contained"
+          sx={{ mt: 4, p: 2 }}
+          onClick={handleFindSlice}
+        >
           Find Slice
         </Button>
       </div>

@@ -7,6 +7,7 @@ import { FaCommentDots } from "react-icons/fa";
 import { PiEyesFill } from "react-icons/pi";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../Store/Atoms/userAtom";
+import { ChartData } from "../types/other";
 
 const Dashboard = () => {
   const userData = useRecoilValue(userAtom);
@@ -19,8 +20,8 @@ const Dashboard = () => {
   const { analyticData } = userData;
 
   // Creating likes data based on user's analytics for the year
-  const likesData = {
-    year: analyticData.year.map((data) => ({
+  const likesData: ChartData = {
+    year: analyticData.year.map((data: { name: string; value: number }) => ({
       name: data.name,
       value: data.value,
     })),

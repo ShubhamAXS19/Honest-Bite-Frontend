@@ -37,7 +37,7 @@ const Login = () => {
 
       navigate("/edit-profile");
     } catch (error) {
-      console.log(error.response.data);
+      console.error(error);
     }
   };
 
@@ -59,8 +59,8 @@ const Login = () => {
                 force={1} // Maximum explosion force
                 duration={5000} // Maximum duration
                 particleCount={20} // Maximum number of particles
-                floorHeight={700} // Increases the explosion height range
-                floorWidth={500} // Increases the explosion width range
+                // floorHeight={700} // Increases the explosion height range
+                // floorWidth={500} // Increases the explosion width range
                 colors={[
                   "#FFC700",
                   "#FF0000",

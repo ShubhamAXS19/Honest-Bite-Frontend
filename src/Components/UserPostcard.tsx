@@ -1,14 +1,18 @@
-import pizaa from "../../assets/pizzaBanner.png";
 import { RxLapTimer } from "react-icons/rx";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import pizaa from "../../assets/pizzaBanner.png";
+import { UserPostCardProps } from "../types/post";
 
-const UserPostCard = ({ showEditButton, postsData }) => {
+const UserPostCard: React.FC<UserPostCardProps> = ({
+  showEditButton,
+  postsData,
+}) => {
   return (
-    <div className="relative inline-block mx-2 my-2 bg-white p-2 rounded-lg shadow-md">
+    <div className="flex-shrink-0 w-64 mx-2 my-2 bg-white p-2 rounded-lg shadow-md">
       <img
-        src={showEditButton ? pizaa : ""}
+        src={postsData ? postsData.img[0] : pizaa}
         alt=""
         className="rounded-lg block h-40 w-full object-cover"
       />

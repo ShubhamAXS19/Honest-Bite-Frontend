@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import styled from "styled-components";
+
+// Define the offset prop interface
+interface PlaceholderTextProps {
+  offset: number;
+}
 
 const SearchContainer = styled.div`
   position: relative;
@@ -48,9 +53,12 @@ const PlaceholderContainer = styled.div`
   height: 1.5em;
 `;
 
-const PlaceholderText = styled.div`
+const PlaceholderText = styled.div.attrs<PlaceholderTextProps>((props) => ({
+  style: {
+    transform: `translateY(${props.offset}%)`,
+  },
+}))<PlaceholderTextProps>`
   transition: transform 0.3s ease;
-  transform: translateY(${(props) => props.offset}%);
 `;
 
 const Searchbar = () => {

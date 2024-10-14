@@ -2,12 +2,13 @@ import UserPostCard from "../Components/UserPostcard";
 import Profile from "../../assets/profile.jpg";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../Store/Atoms/userAtom";
+import { IPost } from "../types/post";
 
 const UserInfo = () => {
   const userData = useRecoilValue(userAtom);
   const postDeatils = useRecoilValue(userAtom);
   const { posts } = postDeatils;
-  console.log(userData);
+  console.log(posts);
   return (
     <div className="flex flex-col items-center justify-center w-[80vw]  my-10 mx-8">
       {/* Avatar */}
@@ -69,7 +70,7 @@ const UserInfo = () => {
       {/* Horizontal Scroll Container for Posts */}
       <div className="overflow-x-auto mx-4 my-2 py-2 w-full ">
         <div className="flex h-20vh">
-          {posts.map((post) => (
+          {posts.map((post: IPost) => (
             <UserPostCard
               key={post._id}
               postsData={post}
@@ -89,7 +90,7 @@ const UserInfo = () => {
       {/* Another Horizontal Scroll Container for Top Posts */}
       <div className="overflow-x-auto mx-4 my-2 py-2 w-full">
         <div className="flex space-x-4">
-          {posts.map((post) => (
+          {posts.map((post: IPost) => (
             <UserPostCard
               key={post._id}
               postsData={post}

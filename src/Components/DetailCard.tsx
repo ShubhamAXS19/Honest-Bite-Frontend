@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -8,8 +9,14 @@ import "swiper/css/autoplay";
 
 import { CiHeart } from "react-icons/ci";
 import { IoShareSocialOutline } from "react-icons/io5";
+import { IoBookmarkOutline } from "react-icons/io5";
+import { IoBookmark } from "react-icons/io5";
 import { AiOutlineLike } from "react-icons/ai";
-import { CiBookmark } from "react-icons/ci";
+
+import { useRecoilState } from "recoil";
+import { userAtom, syncBookmarks } from "../Store/Atoms/userAtom";
+import { IPost, ScrollableCardRowProps } from "../types/post";
+import { IUser } from "../types/user";
 const Card = styled.div`
   background-color: white;
   padding: 16px;
@@ -41,7 +48,8 @@ const RestaurantName = styled.p`
 const Info = styled.div`
   color: #4a5568;
   display: flex;
-  gap: 8px;
+  items-align: center;
+  gap: 4px;
 `;
 
 const Tag = styled.p`
@@ -68,7 +76,43 @@ const Divider = styled.hr`
   margin: 16px 0;
 `;
 
-const DetailCard = ({ post }) => {
+interface DetailCardProps {
+  post: IPost;
+}
+
+const DetailCard: React.FC<DetailCardProps> = ({ post }) => {
+  const [user, setUser] = useRecoilState(userAtom);
+  const toggleBookmark = (postId: string) => {
+    setUser((prevUser: IUser) => {
+      const isBookmarked = prevUser.tempBookmarks.includes(postId);
+      const updatedTempBookmarks = isBookmarked
+        ? prevUser.tempBookmarks.filter((id: string) => id !== postId)
+        : [...prevUser.tempBookmarks, postId];
+
+      // console.log("Toggling bookmark for post ID:", updatedTempBookmarks);
+      return {
+        ...prevUser,
+        tempBookmarks: updatedTempBookmarks,
+      };
+    });
+  };
+
+  const isBookmarked = user.fav.includes(post._id);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (user && user.tempBookmarks) {
+        syncBookmarks(user._id, user.tempBookmarks);
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [user]);
+
   return (
     <Card>
       <Swiper
@@ -79,7 +123,7 @@ const DetailCard = ({ post }) => {
         autoplay={{ delay: 2000 }}
         modules={[Navigation, Pagination, Autoplay]}
       >
-        {post.img.map((image, index) => (
+        {post.img.map((image: string, index: number) => (
           <SwiperSlide key={index}>
             <img
               src={image}
@@ -97,35 +141,51 @@ const DetailCard = ({ post }) => {
 
       <RestaurantName>{post.name}</RestaurantName>
       <Info>
-        {post.tags.map((tag, index) => (
-          <Tag key={index}>{tag}</Tag>
-        ))}
+        {post.tags.map((tag: string, index: number) => {
+          // Split the tag string by space to get individual words
+          const words = tag.split(" ");
+
+          // Only render the 1st and 3rd words, if available
+          return (
+            <React.Fragment key={index}>
+              {words[0] && <Tag>{words[0]}</Tag>} {/* Render 1st word */}
+              {words[2] && <Tag>{words[2]}</Tag>} {/* Render 3rd word */}
+            </React.Fragment>
+          );
+        })}
       </Info>
+
       <Caption>{post.caption}</Caption>
       <Location>{post.location}</Location>
       <Divider />
       <div className="flex items-center justify-between">
         {" "}
         <div className="flex items-center justify-center gap-1">
-          <AiOutlineLike size={20} />
-          <p>Likes: {post.likes}</p>
+          <AiOutlineLike size={30} />
+          <p>{post.likes}</p>
         </div>
         <div className="flex items-center justify-center gap-1">
-          <IoShareSocialOutline size={20} />
-          <p>Shares: {post.shares}</p>
+          <IoShareSocialOutline size={30} />
+          <p>{post.shares}</p>
         </div>
         <div>
-          <CiHeart size={20} />
+          <CiHeart size={30} />
         </div>
-        <div>
-          <CiBookmark size={20} />
+        <div className="flex">
+          <button onClick={() => toggleBookmark(post._id)}>
+            {isBookmarked ? (
+              <IoBookmark size={30} />
+            ) : (
+              <IoBookmarkOutline size={30} />
+            )}
+          </button>
         </div>
       </div>
     </Card>
   );
 };
 
-const ScrollableCardRow = ({ allPosts }) => {
+const ScrollableCardRow: React.FC<ScrollableCardRowProps> = ({ allPosts }) => {
   return (
     <CardsContainer>
       {allPosts.map((post) => (

@@ -2,6 +2,8 @@ import { useRecoilValue } from "recoil";
 import { TopCreatorAtom, TopPostAtom } from "../Store/Atoms/postAtom";
 import SpotCard from "../Components/SpotCard";
 import CreatorCard from "../Components/CreatorCard";
+import { IUser } from "../types/user";
+import { IPost } from "../types/post";
 
 const Trending = () => {
   const topPosts = useRecoilValue(TopPostAtom);
@@ -14,7 +16,7 @@ const Trending = () => {
         <div className="flex-grow border-t-2 mx-4"></div>
         <p>Top Posts This Week</p>
         <div className="flex">
-          {topPosts.map((posts) => (
+          {topPosts.map((posts: IPost) => (
             <SpotCard postData={posts} />
           ))}
         </div>
@@ -24,7 +26,7 @@ const Trending = () => {
         <div className="flex-grow border-t-2 mx-4"></div>
         <p>Top Creator This Week</p>
         <div className="flex">
-          {topCreators.map((creator) => (
+          {topCreators.map((creator: IUser) => (
             <CreatorCard creatorData={creator} />
           ))}
         </div>

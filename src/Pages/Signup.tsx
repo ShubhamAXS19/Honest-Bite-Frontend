@@ -48,18 +48,17 @@ const Signup: React.FC = () => {
       ),
       {
         loading: "Verifying your account...",
-        success: (res) => {
-          // Show toast for successful verification
+        success: () => {
           toast.success("Verification Successful! Please login.");
-          // Show another toast for redirecting
           toast("Redirecting to login page...", {
             duration: 2000,
             icon: "🚀",
           });
-          // Redirect after a delay
           setTimeout(() => {
             navigate("/login");
           }, 2500);
+
+          return "Verification Successful! Please login.";
         },
         error: () => {
           return "Something went wrong. Please try again.";
@@ -97,7 +96,7 @@ const Signup: React.FC = () => {
       ),
       {
         loading: "Registering your account...",
-        success: (res) => {
+        success: () => {
           setIsModalOpen(true); // Open modal on success
           return "Registration Successful! Please check your email.";
         },
@@ -123,8 +122,8 @@ const Signup: React.FC = () => {
                 force={1}
                 duration={5000}
                 particleCount={20}
-                floorHeight={700}
-                floorWidth={500}
+                // floorHeight={700}
+                // floorWidth={500}
                 colors={[
                   "#FFC700",
                   "#FF0000",

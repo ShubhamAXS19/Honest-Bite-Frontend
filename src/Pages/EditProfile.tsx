@@ -1,6 +1,8 @@
+import { useRecoilValue } from "recoil";
 import UserPostCard from "../Components/UserPostcard";
-
-const EditProfile = () => {
+import { getAllPostsAtom } from "../Store/Atoms/postAtom";
+const EditProfile: React.FC = () => {
+  const post = useRecoilValue(getAllPostsAtom);
   return (
     <div className="flex flex-col items-center justify-center w-full  mx-4 my-8">
       <div>
@@ -40,9 +42,9 @@ const EditProfile = () => {
       {/* Horizontal Scrolling Container */}
       <div className="overflow-x-auto mx-4 my-2 py-2 w-full ">
         <div className="grid grid-flow-col gap-4 w-max">
-          <UserPostCard showEditButton={true} />
-          <UserPostCard showEditButton={true} />
-          <UserPostCard showEditButton={true} />
+          <UserPostCard key={post.id} showEditButton={true} postsData={post} />
+          <UserPostCard key={post.id} showEditButton={true} postsData={post} />
+          <UserPostCard key={post.id} showEditButton={true} postsData={post} />
         </div>
       </div>
 
@@ -55,9 +57,9 @@ const EditProfile = () => {
       {/* Another Horizontal Scrolling Container */}
       <div className="overflow-x-auto mx-4 my-2 py-2 w-full h-full">
         <div className="grid grid-flow-col gap-4 w-max">
-          <UserPostCard showEditButton={true} />
-          <UserPostCard showEditButton={true} />
-          <UserPostCard showEditButton={true} />
+          <UserPostCard key={post.id} showEditButton={true} postsData={post} />
+          <UserPostCard key={post.id} showEditButton={true} postsData={post} />
+          <UserPostCard key={post.id} showEditButton={true} postsData={post} />
         </div>
       </div>
     </div>

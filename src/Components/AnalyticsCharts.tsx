@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   LineChart,
   Line,
@@ -12,16 +12,22 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const AnalyticsChart = ({ data, title }) => {
-  const [timePeriod, setTimePeriod] = useState("year");
-  const [chartType, setChartType] = useState("bar"); // New state for chart type
+import { ChartData, ChartProps } from "../types/other";
 
-  const handleTimePeriodChange = (event) => {
-    setTimePeriod(event.target.value);
+const AnalyticsChart: React.FC<ChartProps> = ({ data, title }) => {
+  const [timePeriod, setTimePeriod] = useState<keyof ChartData>("year");
+  const [chartType, setChartType] = useState<"bar" | "line">("bar");
+
+  const handleTimePeriodChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setTimePeriod(event.target.value as keyof ChartData);
   };
 
-  const handleChartTypeChange = (event) => {
-    setChartType(event.target.value); // New handler for chart type
+  const handleChartTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setChartType(event.target.value as "bar" | "line");
   };
 
   return (
@@ -67,16 +73,20 @@ const AnalyticsChart = ({ data, title }) => {
 
 export default AnalyticsChart;
 
-export const AnalyticsLineChart = ({ data, title }) => {
-  const [timePeriod, setTimePeriod] = useState("year");
-  const [chartType, setChartType] = useState("line"); // New state for chart type
+export const AnalyticsLineChart: React.FC<ChartProps> = ({ data, title }) => {
+  const [timePeriod, setTimePeriod] = useState<keyof ChartData>("year");
+  const [chartType, setChartType] = useState<"bar" | "line">("line");
 
-  const handleTimePeriodChange = (event) => {
-    setTimePeriod(event.target.value);
+  const handleTimePeriodChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setTimePeriod(event.target.value as keyof ChartData);
   };
 
-  const handleChartTypeChange = (event) => {
-    setChartType(event.target.value); // New handler for chart type
+  const handleChartTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setChartType(event.target.value as "bar" | "line");
   };
 
   return (

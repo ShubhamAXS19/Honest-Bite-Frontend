@@ -70,18 +70,17 @@ const ImageUploader = () => {
         }),
         {
           loading: "Creating Post...",
-          success: (res) => {
-            // Show toast for successful verification
+          success: () => {
             toast.success("Post Created.");
-            // Show another toast for redirecting
             toast("Redirecting to your profile page...", {
               duration: 3000,
               icon: "🚀",
             });
-            // Redirect after a delay
             setTimeout(() => {
               navigate("/userInfo");
             }, 2500);
+
+            return "Post Created.";
           },
           error: (err) => {
             console.error(err);

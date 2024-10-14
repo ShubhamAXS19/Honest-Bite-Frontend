@@ -12,7 +12,7 @@ import { useRecoilValue } from "recoil";
 import { userAtom } from "../Store/Atoms/userAtom";
 
 const Header = () => {
-  const [weather, setWeather] = useState<any | null>(null);
+  const [, setWeather] = useState<any | null>(null);
   const [gif, setGif] = useState<string>("");
   const userInfo = useRecoilValue(userAtom);
 
@@ -24,8 +24,8 @@ const Header = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
           const { latitude, longitude } = position.coords;
-          console.log("Latitude is :", latitude);
-          console.log("Longitude is :", longitude);
+          // console.log("Latitude is :", latitude);
+          // console.log("Longitude is :", longitude);
           const weatherData = await HeaderGIF(latitude, longitude);
           setWeather(weatherData);
           selectGif(weatherData);
@@ -35,9 +35,9 @@ const Header = () => {
       }
     };
 
-    const selectGif = (weatherData: any) => {
-      if (weatherData) {
-        const weatherCondition = weatherData.weather[0].main.toLowerCase();
+    const selectGif = (weather: any) => {
+      if (weather) {
+        const weatherCondition = weather.weather[0].main.toLowerCase();
         // const weatherCondition = "rain";
         switch (weatherCondition) {
           case "clear":

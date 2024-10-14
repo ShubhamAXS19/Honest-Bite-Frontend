@@ -17,7 +17,8 @@ const UserInfo = React.lazy(() => import("./Pages/UserInfo"));
 import EditPost from "./Pages/EditPost";
 import NotFound from "./Components/NotFound";
 import Test from "./Components/Test";
-import Fallback from "./Utils/Fallback";
+// import Fallback from "./Utils/Fallback";
+import { CircularProgress } from "@mui/material";
 import ErrorBoundary from "./Utils/ErrorBoundary";
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
             path="/trending"
             element={
               <ErrorBoundary>
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<CircularProgress />}>
                   <Trending />
                 </Suspense>
               </ErrorBoundary>
@@ -58,7 +59,7 @@ function App() {
             path="/userInfo"
             element={
               <ErrorBoundary>
-                <Suspense fallback={<Fallback />}>
+                <Suspense fallback={<CircularProgress />}>
                   <UserInfo />
                 </Suspense>
               </ErrorBoundary>
