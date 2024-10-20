@@ -46,7 +46,6 @@ export const getAllPostsAtom = atom({
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/post/allposts`
         );
-        console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching all posts: ", error);
