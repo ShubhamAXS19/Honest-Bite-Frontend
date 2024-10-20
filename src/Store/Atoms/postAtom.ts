@@ -8,7 +8,7 @@ export const TopPostAtom = atom({
     get: async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/v1/post/top-posts"
+          `${import.meta.env.VITE_API_URL}/post/top-posts`
         );
         console.log(response.data);
         return response.data;
@@ -26,7 +26,7 @@ export const TopCreatorAtom = atom({
     get: async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/v1/eat/top-creators"
+          `${import.meta.env.VITE_API_URL}/eat/top-creators`
         );
         return response.data;
       } catch (error) {
@@ -44,8 +44,9 @@ export const getAllPostsAtom = atom({
     get: async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/v1/post/allposts"
+          `${import.meta.env.VITE_API_URL}/post/allposts`
         );
+        console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching all posts: ", error);
