@@ -7,18 +7,16 @@ import ForYou from "../Components/ForYou";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { getAllPostsAtom } from "../Store/Atoms/postAtom";
+import taco from "../../public/assets/taco.jpg";
+import sandwich from "../../public/assets/sandwich.jpg";
+import pavBhaji from "../../public/assets/pav-bhaji.jpg";
+import burger from "../../public/assets/burger.jpg";
 
 const Homepage = () => {
   const allPosts = useRecoilValue(getAllPostsAtom);
   // console.log(allPosts);
-  const leftImages = [
-    "../../public/assets/taco.jpg",
-    "../../public/assets/sandwich.jpg",
-  ];
-  const rightImages = [
-    "../../public/assets/pav-bhaji.jpg",
-    "../../public/assets/burger.jpg",
-  ];
+  const leftImages = [taco, sandwich];
+  const rightImages = [pavBhaji, burger];
 
   return (
     <>
