@@ -1,5 +1,5 @@
 import UserPostCard from "../Components/UserPostcard";
-import Profile from "../../assets/profile.jpg";
+import Profile from "../../public/assets/profile.jpg";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "../Store/Atoms/userAtom";
 import { IPost } from "../types/post";
