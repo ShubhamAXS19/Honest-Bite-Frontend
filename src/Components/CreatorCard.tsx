@@ -1,4 +1,4 @@
-import pizza from "../../assets/pizzaBanner.png";
+import pizza from "../../public/assets/pizzaBanner.png";
 import { CreatorCardProps } from "../types/user";
 
 const CreatorCard: React.FC<CreatorCardProps> = () => {

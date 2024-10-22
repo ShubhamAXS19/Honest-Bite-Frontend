@@ -1,4 +1,4 @@
-import NotFoundImg from "../../assets/404-error-page-found-with-donut_114341-54.avif";
+import NotFoundImg from "../../public/assets/404-error-page-found-with-donut_114341-54.avif";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 const NotFound = () => {

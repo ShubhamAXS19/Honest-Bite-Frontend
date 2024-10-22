@@ -11,9 +11,9 @@ import { Link, useNavigate } from "react-router-dom";
 import ConfettiExplosion from "react-confetti-explosion";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import biryani from "../../assets/biryani.jpg";
-import burger from "../../assets/burger.jpg";
-import QUESADILLA from "../../assets/QUESADILLA.jpg";
+import biryani from "../../public/assets/biryani.jpg";
+import burger from "../../public/assets/burger.jpg";
+import QUESADILLA from "../../public/assets/QUESADILLA.jpg";
 
 const images = [biryani, burger, QUESADILLA];
 

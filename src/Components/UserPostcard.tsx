@@ -2,7 +2,7 @@ import { RxLapTimer } from "react-icons/rx";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import pizaa from "../../assets/pizzaBanner.png";
+import pizaa from "../../public/assets/pizzaBanner.png";
 import { UserPostCardProps } from "../types/post";
 
 const UserPostCard: React.FC<UserPostCardProps> = ({

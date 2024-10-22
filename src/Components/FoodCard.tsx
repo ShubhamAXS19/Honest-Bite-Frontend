@@ -1,13 +1,13 @@
-import pizzaSlice from "../../assets/pizza.png";
-import applePie from "../../assets/apple-pie.png";
-import bagel from "../../assets/bagel.png";
-import bhelpuri from "../../assets/bhelpuri.png";
-import choleBhature from "../../assets/chole-bhature.png";
-import fafafel from "../../assets/fafafel.png";
-import paneerTikka from "../../assets/paneer-tikka.png";
-import pasta from "../../assets/pasta.png";
-import IdliSambhar from "../../assets/idli-with-sambar.png";
-import ragda from "../../assets/ragda.png";
+import pizzaSlice from "../../public/assets/pizza.png";
+import applePie from "../../public/assets/apple-pie.png";
+import bagel from "../../public/assets/bagel.png";
+import bhelpuri from "../../public/assets/bhelpuri.png";
+import choleBhature from "../../public/assets/chole-bhature.png";
+import fafafel from "../../public/assets/fafafel.png";
+import paneerTikka from "../../public/assets/paneer-tikka.png";
+import pasta from "../../public/assets/pasta.png";
+import IdliSambhar from "../../public/assets/idli-with-sambar.png";
+import ragda from "../../public/assets/ragda.png";
 
 // Update the icons array to include both image and name
 const icons = [

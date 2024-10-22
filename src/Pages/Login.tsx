@@ -8,9 +8,9 @@ import "swiper/css/autoplay";
 import ConfettiExplosion from "react-confetti-explosion";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import biryani from "../../assets/biryani.jpg";
-import burger from "../../assets/burger.jpg";
-import QUESADILLA from "../../assets/QUESADILLA.jpg";
+import biryani from "../../public/assets/biryani.jpg";
+import burger from "../../public/assets/burger.jpg";
+import QUESADILLA from "../../public/assets/QUESADILLA.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast"; // Import toast

@@ -11,8 +11,14 @@ import { getAllPostsAtom } from "../Store/Atoms/postAtom";
 const Homepage = () => {
   const allPosts = useRecoilValue(getAllPostsAtom);
   // console.log(allPosts);
-  const leftImages = ["../../assets/taco.jpg", "../../assets/sandwich.jpg"];
-  const rightImages = ["../../assets/pav-bhaji.jpg", "../../assets/burger.jpg"];
+  const leftImages = [
+    "../../public/assets/taco.jpg",
+    "../../public/assets/sandwich.jpg",
+  ];
+  const rightImages = [
+    "../../public/assets/pav-bhaji.jpg",
+    "../../public/assets/burger.jpg",
+  ];
 
   return (
     <>

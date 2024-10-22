@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GoHome, GoHomeFill } from "react-icons/go";
-import PizzaIcon from "../../assets/pizza.png";
+import PizzaIcon from "../../public/assets/pizza.png";
 import { PiMapPinLight, PiMapPinFill } from "react-icons/pi";
 import { LuPlusCircle } from "react-icons/lu";
 import { AiFillPlusCircle } from "react-icons/ai";
