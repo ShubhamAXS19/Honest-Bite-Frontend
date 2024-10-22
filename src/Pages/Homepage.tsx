@@ -43,7 +43,7 @@ const Homepage = () => {
         <div className="flex-grow border-t-2 mx-4"></div>
       </div>
       {/* ---------------- */}
-      <div className="overflow-x-auto mx-4 my-2 py-2">
+      <div className="md:overflow-x-auto mx-4 my-2 py-2">
         <FoodCard />
       </div>
       {/* ---------------- */}
