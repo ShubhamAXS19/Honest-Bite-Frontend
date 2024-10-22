@@ -24,8 +24,6 @@ const Header = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
           const { latitude, longitude } = position.coords;
-          // console.log("Latitude is :", latitude);
-          // console.log("Longitude is :", longitude);
           const weatherData = await HeaderGIF(latitude, longitude);
           setWeather(weatherData);
           selectGif(weatherData);

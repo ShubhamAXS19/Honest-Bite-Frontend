@@ -26,10 +26,14 @@ const Login = () => {
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/v1/auth/sessions", {
-        email: Email,
-        password: Password,
-      });
+      const res = await axios.post(
+        // "http://localhost:3000/v1/auth/sessions",
+        `${import.meta.env.VITE_API_URL}/auth/sessions`,
+        {
+          email: Email,
+          password: Password,
+        }
+      );
       localStorage.setItem("accessToken", res.data.token);
 
       // Show toast notification after successful login

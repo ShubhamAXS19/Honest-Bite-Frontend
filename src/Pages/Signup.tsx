@@ -35,7 +35,9 @@ const Signup: React.FC = () => {
     // Use toast.promise to handle pending, success, and error states
     toast.promise(
       axios.post(
-        `http://localhost:3000/v1/auth/verify/${userID}/${verificationCode}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/auth/verify/${userID}/${verificationCode}`,
         {
           id: userID,
           verificationCode: verificationCode,
@@ -80,7 +82,8 @@ const Signup: React.FC = () => {
     // Use toast.promise to handle pending, success, and error states
     toast.promise(
       axios.post(
-        "http://localhost:3000/v1/auth/register",
+        // "http://localhost:3000/v1/auth/register",
+        `${import.meta.env.VITE_API_URL}/auth/register`,
         {
           firstName: FirstName,
           lastName: LastName,
